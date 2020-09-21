@@ -4,6 +4,7 @@ import com.example.domain.model.Reservation
 
 interface ReservationRepository {
     suspend fun save(entity: Reservation): Reservation
+    suspend fun findById(id: Long): Reservation?
     suspend fun findByLocation(locationId: Long): List<Reservation>
     suspend fun findByUsername(username: String): List<Reservation>
 }

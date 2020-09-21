@@ -21,6 +21,10 @@ internal class ReservationRepositoryImpl(
         return dao.save(entity.toTable()).toDomain()
     }
 
+    override suspend fun findById(id: Long): Reservation? {
+        return dao.findById(id)?.toDomain()
+    }
+
     override suspend fun findByLocation(locationId: Long): List<Reservation> {
         return dao.findByLocationId(locationId).toList().map { it.toDomain() }
     }
