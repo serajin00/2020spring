@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import kotlinx.coroutines.reactive.awaitFirst
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBody
 import org.springframework.test.web.reactive.server.returnResult
 
 @ApiTest
@@ -18,7 +19,8 @@ class LocationApiTest(
         webClient.get().uri("/api/v1/locations")
             .exchange()
             .expectStatus().isOk
-            .returnResult<JsonNode>().also(::println)
+            .expectBody<JsonNode>()
+            .consumeWith { println(it) }
     }
 
     @Test
@@ -30,10 +32,18 @@ class LocationApiTest(
 
     @Test
     fun get() = withRollback {
-        webClient.get().uri("/api/v1/locations/1")
+        val uri = "/api/v1/locations/1"
+        webClient.get().uri(uri)
             .exchange()
             .expectStatus().isOk
-            .returnResult<JsonNode>().responseBody.awaitFirst().also(::println)
+            .expectBody()
+            .jsonPath("id").isEqualTo(1)
+            .jsonPath("uri").isEqualTo(uri)
+            .jsonPath("name").exists()
+            .jsonPath("address").exists()
+            .jsonPath("createdAt").exists()
+            .jsonPath("updatedAt").exists()
+            .consumeWith { println(String(it.responseBody!!)) }
     }
 
     @Test
@@ -47,7 +57,10 @@ class LocationApiTest(
             .bodyValue(body)
             .exchange()
             .expectStatus().isCreated
-            .returnResult<JsonNode>().responseBody.awaitFirst().also(::println)
+            .expectBody<JsonNode>()
+            .consumeWith { println(it) }
+            .returnResult()
+            .responseBody!!
 
         val id = res["id"].asLong()
         val uri = res["uri"].asText()
@@ -73,6 +86,8 @@ class LocationApiTest(
             .bodyValue(body)
             .exchange()
             .expectStatus().isOk
+            .expectBody<JsonNode>()
+            .consumeWith { println(it) }
 
         webClient.get().uri(uri)
             .exchange()
@@ -91,6 +106,8 @@ class LocationApiTest(
             .bodyValue(body)
             .exchange()
             .expectStatus().isOk
+            .expectBody<JsonNode>()
+            .consumeWith { println(it) }
 
         webClient.get().uri(uri)
             .exchange()

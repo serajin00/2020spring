@@ -7,6 +7,8 @@ import com.example.api.model.LocationResponse
 import com.example.domain.model.Location
 import com.example.domain.repository.LocationRepository
 import com.example.dto.data.LocationData
+import com.example.dto.data.common.TimestampsData
+import com.example.infra.db.ts.TableTimestampsQueryService
 import com.example.service.LocationService
 import com.fasterxml.jackson.databind.JsonNode
 import org.springframework.data.domain.Page
@@ -18,20 +20,26 @@ import org.springframework.web.reactive.function.server.*
 @Controller
 class LocationHandler(
     val service: LocationService,
-    val repository: LocationRepository
+    val repository: LocationRepository,
+    val tsquery: TableTimestampsQueryService
 ) {
-    private fun Location.toResponse(): LocationResponse {
-        return LocationResponse(
-            id = id!!,
-            data = LocationData.fromDomain(this)
-        )
+    private suspend fun List<Location>.mapToResponse(): List<LocationResponse> {
+        val tss = tsquery.getTimestamps("locations", map { it.id })
+        return map { location ->
+            val id = location.id!!
+            LocationResponse(
+                id = id,
+                data = LocationData.fromDomain(location),
+                ts = tss[id]?.toData()
+            )
+        }
     }
 
-    private fun List<Location>.mapToResponse(): List<LocationResponse> {
-        return map { it.toResponse() }
+    private suspend fun Location.toResponse(): LocationResponse {
+        return listOf(this).mapToResponse().first()
     }
 
-    private fun Page<Location>.mapToResponse(): Page<LocationResponse> {
+    private suspend fun Page<Location>.mapToResponse(): Page<LocationResponse> {
         return PageImpl(content.mapToResponse(), pageable, totalElements)
     }
 

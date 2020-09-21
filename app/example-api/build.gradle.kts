@@ -14,5 +14,4 @@ dependencies {
     developmentOnly(project(":libs:test-infra"))
 
     testImplementation(project(":libs:test-infra"))
-    testImplementation(project(":libs:test-web"))
 }
