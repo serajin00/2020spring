@@ -1,4 +1,5 @@
-# this properties loaded when activeProfiles include "infra"
+# this properties applied when activeProfiles include "infra"
+# NOTE: this style should be changed on spring-boot 2.4 - https://docs.spring.io/spring-boot/docs/2.4.0-M3/reference/html/spring-boot-features.html#boot-features-external-config-file-activation-properties
 
 ---
 spring.profiles: dev
