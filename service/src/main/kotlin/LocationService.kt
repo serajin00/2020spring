@@ -38,5 +38,4 @@ class LocationServiceImpl(
             repository.save(data.toDomain(id = id))
         }
     }
-
 }

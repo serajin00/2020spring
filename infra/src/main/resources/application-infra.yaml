@@ -1,19 +1,21 @@
-# this properties applied when activeProfiles include "infra"
+# this properties applied when activeProfiles includes "infra"
 # NOTE: this style should be changed on spring-boot 2.4 - https://docs.spring.io/spring-boot/docs/2.4.0-M3/reference/html/spring-boot-features.html#boot-features-external-config-file-activation-properties
 
 ---
 spring.profiles: dev
 
+# for illustration purposes, use h2 in-memory database in 'dev' profile
 spring:
   r2dbc:
-    url: TODO(dev mysql database)
-
+    url: r2dbc:h2:mem:///testdb
 
 ---
 spring.profiles: prod
 
 spring:
   r2dbc:
-    url: TODO(prod mysql database)
+    url: r2dbc:pool:mysql://prod-mydb.example.com/prod
+    username: todo
+    password: todo
 
 ---

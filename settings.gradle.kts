@@ -1,6 +1,8 @@
 rootProject.name = "2020spring"
 
 include(
+    "app:example-api",
+
     "domain",
     "dto",
     "infra",

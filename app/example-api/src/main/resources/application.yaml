@@ -1,0 +1,14 @@
+# this app includes 'infra' profile (for application-infra.yaml)
+
+spring.profiles.include:
+- infra
+
+server:
+  error:
+    include-stacktrace: never
+
+---
+spring.profiles: dev
+server:
+  error:
+    include-stacktrace: on_param

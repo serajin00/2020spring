@@ -1,0 +1,8 @@
+# this app runs as 'dev' profile if no profile specified.
+# if you want to run as 'prod' profile, set SPRING_PROFILES_ACTIVE=prod environment variable
+
+spring.profiles.active: dev
+
+# for illustration purposes, include 'test' profile to initialize in-memory database
+spring.profiles.include:
+- test
