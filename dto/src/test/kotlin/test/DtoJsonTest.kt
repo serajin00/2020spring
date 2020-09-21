@@ -1,19 +1,15 @@
 package com.example.dto.test
 
+import com.example.dto.DtoTest
 import com.example.dto.data.LocationData
 import com.example.test.models.TestLocations
 import com.example.test.models.TestReservations
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.TestConstructor
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig
 
-@SpringJUnitConfig
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-@SpringBootTest
-class JsonTest(
+@DtoTest
+class DtoJsonTest(
     val objectMapper: ObjectMapper
 ) {
     @Test

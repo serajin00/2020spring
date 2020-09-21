@@ -1,0 +1,18 @@
+# this properties loaded when activeProfiles include "infra"
+
+---
+spring.profiles: dev
+
+spring:
+  r2dbc:
+    url: TODO(dev mysql database)
+
+
+---
+spring.profiles: prod
+
+spring:
+  r2dbc:
+    url: TODO(prod mysql database)
+
+---

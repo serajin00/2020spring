@@ -6,5 +6,6 @@ data class Reservation(
     val id: Long?,
     val locationId: Long,
     val username: String,
-    val schedule: Interval
+    val schedule: Interval,
+    val memo: String?
 )

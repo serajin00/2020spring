@@ -10,7 +10,8 @@ object TestReservations {
             id = null,
             locationId = 1,
             username = "user",
-            schedule = interval("2020-01-01".."2020-12-31")
+            schedule = interval("2020-01-01".."2020-12-31"),
+            memo = "memo"
         )
     }
     val reservationData by lazy {
